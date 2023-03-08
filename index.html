@@ -11,10 +11,17 @@
     <title>Product App</title>
 </head>
 <body>
+<div class="nav-bar"></div>
+
+
 <div id="app">
-    <Product :premium="premium"></Product>
-    <Product></Product>
-    <Product></Product>
+    <div class="cart">
+        <p>Корзина({{cart.length}})</p>
+    </div>
+
+    <Product :premium="premium" @add-to-cart="updateCart"></Product>
+
+
 
 
 
