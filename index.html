@@ -12,9 +12,6 @@
 </head>
 <body>
 <div id="app">
-    <h1>{{product}}</h1>
-    <p>{{description}}</p>
-
 
     <div class="product">
 
@@ -24,7 +21,13 @@
 
         <div class="product-info">
             <h1>{{ product }}</h1>
+            <p>{{description}}</p>
             <a v-bind:href="link">Больше таких продуктов</a>
+
+            <p v-if="inventory > 10">В наличии</p>
+            <p v-else-if="inventory <= 10 && inventory > 0">Почти распродано!</p>
+            <p v-else>Распродано</p>
+
         </div>
 
     </div>
