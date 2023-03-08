@@ -13,6 +13,74 @@ Vue.component('product-details', {
 })
 
 
+Vue.component('product-review', {
+    template: `
+         <form class="review-form" @submit.prevent="onSubmit">
+             <p v-if="errors.length">
+                 <b>Пожалуйста исправьте следующие ошибки:</b>
+                 <ul>
+                     <li v-for="error in errors">{{ error }}</li>
+                 </ul>
+            </p>
+
+             <p>
+               <label for="name">Имя:</label>
+               <input id="name" v-model="name" placeholder="name">
+             </p>
+        
+             <p>
+               <label for="review">Комментарий:</label>
+               <textarea id="review" v-model="review"></textarea>
+             </p>
+        
+             <p>
+               <label for="rating">Оценка:</label>
+               <select id="rating" v-model.number="rating">
+                 <option>5</option>
+                 <option>4</option>
+                 <option>3</option>
+                 <option>2</option>
+                 <option>1</option>
+               </select>
+             </p>
+            
+             <p>
+               <input type="submit" value="Отправить"> 
+             </p>
+        
+         </form>
+
+         `,
+    data() {
+        return {
+            name: null,
+            review: null,
+            rating: null,
+            errors: []
+        }
+    },
+    methods: {
+        onSubmit() {
+            if (this.name && this.review && this.rating) {
+                let productReview = {
+                    name: this.name,
+                    review: this.review,
+                    rating: this.rating
+                }
+                this.$emit('review-submitted', productReview)
+                this.name = null
+                this.review = null
+                this.rating = null
+            } else {
+                if (!this.name) this.errors.push("Не указано имя.")
+                if (!this.review) this.errors.push("Отсутствует комментарий.")
+                if (!this.rating) this.errors.push("Оценка не выбрана.")
+            }
+        }
+    }
+})
+
+
 
 Vue.component('product', {
     props:{
@@ -21,6 +89,7 @@ Vue.component('product', {
             required: true,
         }
     },
+    // language=HTML
     template:`
     <div class="product">
 
@@ -61,8 +130,20 @@ Vue.component('product', {
                      :class="{ disabledButton: !inStock }">
                 Добавить в корзину</button>
             <button @click="removeFromCart">Удалить из корзины</button>
-
+            
         </div>
+        <div>
+            <h2>Отзывы</h2>
+            <p v-if="!reviews.length">Отзывов пока нет.</p>
+            <ul>
+                <li v-for="review in reviews">
+                    <p>{{ review.name }}</p>
+                    <p>Оценка: {{ review.rating }}</p>
+                    <p>{{ review.review }}</p>
+                </li>
+            </ul>
+        </div><product-review @review-submitted="addReview"></product-review>
+        
     </div>
     `,
     data(){
@@ -92,6 +173,7 @@ Vue.component('product', {
             ],
             sizes: ['S', 'M', 'L', 'XL', 'XXL', 'XXXL'],
             brand: 'Vue Mastery',
+            reviews:[],
         }
 
     },
@@ -148,8 +230,6 @@ Vue.component('product', {
     }
 
 })
-
-
 
 let app = new Vue({
     el: '#app',
