@@ -91,7 +91,6 @@ Vue.component('product', {
                 }
             ],
             sizes: ['S', 'M', 'L', 'XL', 'XXL', 'XXXL'],
-            cart: 0,
             brand: 'Vue Mastery',
         }
 
@@ -108,8 +107,8 @@ Vue.component('product', {
             console.log(index);
         },
 
-        removeFromCart() {
-            this.cart -= 1
+        removeFromCart: function() {
+            this.$emit('remove-from-cart');
         },
 
 
@@ -161,6 +160,9 @@ let app = new Vue({
     methods: {
         updateCart(id) {
             this.cart.push(id);
+        },
+        removeCart(id){
+            this.cart.pop(id);
         }
     }
 
