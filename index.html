@@ -29,6 +29,14 @@
             <p v-else>Распродано</p>
             <span v-if="onSale">Распродажа!</span>
 
+            <ul>
+                <li v-for="detail in details">{{ detail }}</li>
+            </ul>
+
+            <div v-for="variant in variants" :key="variant.variantId">
+                <p>{{ variant.variantColor }}</p>
+            </div>
+
         </div>
 
     </div>
