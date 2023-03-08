@@ -27,7 +27,7 @@
             <p v-if="inventory > 10">В наличии</p>
             <p v-else-if="inventory <= 10 && inventory > 0">Почти распродано!</p>
             <p v-else :class="{ outOfStock: !inStock }">Распродано</p>
-            <span v-if="onSale">Распродажа!</span>
+            <span>{{sale}}</span>
 
             <ul>
                 <li v-for="detail in details">{{ detail }}</li>
