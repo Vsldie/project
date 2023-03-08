@@ -43,10 +43,21 @@ Vue.component('product-review', {
                  <option>1</option>
                </select>
              </p>
+             
+             
+             <p>Вы бы порекомендовали этот продукт?</p>
+             
+             <label>Однозначно!
+                <input type="radio" value="Definitely" v-model="recommend"/>
+             </label>
+             <label>Да
+                <input type="radio" value="Yes" v-model="recommend"/>
+              </label> 
             
              <p>
                <input type="submit" value="Отправить"> 
              </p>
+             
         
          </form>
 
@@ -89,7 +100,6 @@ Vue.component('product', {
             required: true,
         }
     },
-    // language=HTML
     template:`
     <div class="product">
 
@@ -142,7 +152,8 @@ Vue.component('product', {
                     <p>{{ review.review }}</p>
                 </li>
             </ul>
-        </div><product-review @review-submitted="addReview"></product-review>
+        </div>
+        <product-review @review-submitted="addReview"></product-review>
         
     </div>
     `,
