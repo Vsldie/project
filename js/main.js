@@ -203,7 +203,7 @@ Vue.component('product-tabs', {
     props: {
         reviews: {
             type: Array,
-            required: true
+            required: true,
         },
     },
     template: `
